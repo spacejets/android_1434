@@ -8,11 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
-
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
@@ -40,36 +37,29 @@ private int questionIndex = 0;
             questionIndex = savedInstanceState.getInt("questionIndex");
         }
         textView.setText(questions[questionIndex].getQuestionReId());
-        yesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (questions[questionIndex].isAnswerTrue())
-                Toast.makeText(MainActivity.this,R.string.correct,Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(MainActivity.this,R.string.incorrect,Toast.LENGTH_SHORT).show();
-                questionIndex=(questionIndex + 1)%questions.length;
-                textView.setText(questions[questionIndex].getQuestionReId());}});
+        yesBtn.setOnClickListener(view -> {
+            if (questions[questionIndex].isAnswerTrue())
+            Toast.makeText(MainActivity.this,R.string.correct,Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(MainActivity.this,R.string.incorrect,Toast.LENGTH_SHORT).show();
+            questionIndex=(questionIndex + 1)%questions.length;
+            textView.setText(questions[questionIndex].getQuestionReId());});
 
 
 noBtn = (Button) findViewById(R.id.noBtn);
-noBtn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-    if (questions[questionIndex].isAnswerTrue())
+noBtn.setOnClickListener(view -> {
+if (questions[questionIndex].isAnswerTrue())
 
-        Toast.makeText(MainActivity.this,R.string.incorrect,Toast.LENGTH_SHORT).show();
-    else
-        Toast.makeText(MainActivity.this,R.string.correct,Toast.LENGTH_SHORT).show();
-    questionIndex=(questionIndex + 1)%questions.length;
-    textView.setText(questions[questionIndex].getQuestionReId());}});
-        showAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AnswerActivity.class);
-                intent.putExtra("answer",questions[questionIndex].isAnswerTrue());
-                startActivity(intent);
+    Toast.makeText(MainActivity.this,R.string.incorrect,Toast.LENGTH_SHORT).show();
+else
+    Toast.makeText(MainActivity.this,R.string.correct,Toast.LENGTH_SHORT).show();
+questionIndex=(questionIndex + 1)%questions.length;
+textView.setText(questions[questionIndex].getQuestionReId());});
+        showAnswer.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, AnswerActivity.class);
+            intent.putExtra("answer",questions[questionIndex].isAnswerTrue());
+            startActivity(intent);
 
-            }
         });}
 
 
@@ -93,7 +83,7 @@ noBtn.setOnClickListener(new View.OnClickListener() {
         Log.d("SYSTEM INFO","Метод onStop() запущен");
     }
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){ // Метод сохранения данных перед уничтожением активности
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){ // Метод сохранения данных перед уничтожением активности
         super.onSaveInstanceState(savedInstanceState);
         Log.d("SYSTEM INFO","Метод onSaveInstanceState() запущен");
         savedInstanceState.putInt("questionIndex",questionIndex); // Добавили элемент по ключу
