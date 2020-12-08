@@ -10,14 +10,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
 private Button yesBtn;
 private Button noBtn;
 private Button showAnswer;
-    private static String ArrayList;
     private Question[] questions = new Question[]{
         new Question(R.string.question,true),
         new Question(R.string.question1,false),
